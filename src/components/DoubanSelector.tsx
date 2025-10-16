@@ -56,24 +56,15 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     { label: '日本', value: '日本' },
   ];
 
-  // 电视剧的一级选择器选项
-  const tvPrimaryOptions: SelectorOption[] = [
+  // 电视剧选择器选项
+  const tvOptions: SelectorOption[] = [
     { label: '全部', value: 'tv' },
-    { label: '国产剧', value: 'tv_domestic' },
-    { label: '美剧', value: 'tv_american' },
-    { label: '日剧', value: 'tv_japanese' },
-    { label: '韩剧', value: 'tv_korean' },
+    { label: '国产', value: 'tv_domestic' },
+    { label: '欧美', value: 'tv_american' },
+    { label: '日本', value: 'tv_japanese' },
+    { label: '韩国', value: 'tv_korean' },
     { label: '动漫', value: 'tv_animation' },
     { label: '纪录片', value: 'tv_documentary' },
-  ];
-
-  // 电视剧的二级选择器选项
-  const tvSecondaryOptions: SelectorOption[] = [
-    { label: '全部', value: '全部' },
-    { label: '国产', value: '国产' },
-    { label: '欧美', value: '欧美' },
-    { label: '日本', value: '日本' },
-    { label: '韩国', value: '韩国' },
   ];
 
   // 综艺选择器选项
@@ -130,17 +121,6 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
         primaryButtonRefs,
         setPrimaryIndicatorStyle
       );
-    } else if (type === 'tv') {
-      const activeIndex = tvPrimaryOptions.findIndex(
-        (opt) =>
-          opt.value === (primarySelection || tvPrimaryOptions[0].value)
-      );
-      updateIndicatorPosition(
-        activeIndex,
-        primaryContainerRef,
-        primaryButtonRefs,
-        setPrimaryIndicatorStyle
-      );
     }
 
     // 副选择器初始位置
@@ -151,9 +131,8 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
           opt.value === (secondarySelection || movieSecondaryOptions[0].value)
       );
     } else if (type === 'tv') {
-      console.log('secondarySelection', secondarySelection);
-      secondaryActiveIndex = tvSecondaryOptions.findIndex(
-        (opt) => opt.value === (secondarySelection || tvSecondaryOptions[0].value)
+      secondaryActiveIndex = tvOptions.findIndex(
+        (opt) => opt.value === (secondarySelection || tvOptions[0].value)
       );
     } else if (type === 'show') {
       secondaryActiveIndex = showOptions.findIndex(
@@ -184,17 +163,6 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
         setPrimaryIndicatorStyle
       );
       return cleanup;
-    } else if (type === 'tv') {
-      const activeIndex = tvPrimaryOptions.findIndex(
-        (opt) => opt.value === primarySelection
-      );
-      const cleanup = updateIndicatorPosition(
-        activeIndex,
-        primaryContainerRef,
-        primaryButtonRefs,
-        setPrimaryIndicatorStyle
-      );
-      return cleanup;
     }
   }, [primarySelection]);
 
@@ -209,10 +177,10 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
       );
       options = movieSecondaryOptions;
     } else if (type === 'tv') {
-      activeIndex = tvSecondaryOptions.findIndex(
+      activeIndex = tvOptions.findIndex(
         (opt) => opt.value === secondarySelection
       );
-      options = tvSecondaryOptions;
+      options = tvOptions;
     } else if (type === 'show') {
       activeIndex = showOptions.findIndex(
         (opt) => opt.value === secondarySelection
@@ -321,37 +289,19 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
         </div>
       )}
 
-      {/* 电视剧类型 - 显示两级选择器 */}
+      {/* 电视剧类型 - 只显示一级选择器 */}
       {type === 'tv' && (
-        <div className='space-y-3 sm:space-y-4'>
-          {/* 一级选择器 */}
-          <div className='flex flex-col sm:flex-row sm:items-center gap-2'>
-            <span className='text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 min-w-[48px]'>
-              类型
-            </span>
-            <div className='overflow-x-auto'>
-              {renderCapsuleSelector(
-                tvPrimaryOptions,
-                primarySelection || tvPrimaryOptions[0].value,
-                onPrimaryChange,
-                true
-              )}
-            </div>
-          </div>
-
-          {/* 二级选择器 */}
-          <div className='flex flex-col sm:flex-row sm:items-center gap-2'>
-            <span className='text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 min-w-[48px]'>
-              地区
-            </span>
-            <div className='overflow-x-auto'>
-              {renderCapsuleSelector(
-                tvSecondaryOptions,
-                secondarySelection || tvSecondaryOptions[0].value,
-                onSecondaryChange,
-                false
-              )}
-            </div>
+        <div className='flex flex-col sm:flex-row sm:items-center gap-2'>
+          <span className='text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 min-w-[48px]'>
+            类型
+          </span>
+          <div className='overflow-x-auto'>
+            {renderCapsuleSelector(
+              tvOptions,
+              secondarySelection || tvOptions[0].value,
+              onSecondaryChange,
+              false
+            )}
           </div>
         </div>
       )}

@@ -88,9 +88,24 @@
   },
   "custom_category": [
     {
-      "name": "动漫",
+      "name": "日本动画",
       "type": "tv",
-      "query": "动漫"
+      "query": "日本动画"
+    },
+    {
+      "name": "日剧",
+      "type": "tv",
+      "query": "日剧"
+    },
+    {
+      "name": "纪录片",
+      "type": "tv",
+      "query": "纪录片"
+    },
+    {
+      "name": "哈利波特",
+      "type": "tv",
+      "query": "爱丽丝"
     }
   ]
 }
